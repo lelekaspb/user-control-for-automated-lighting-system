@@ -1,0 +1,13 @@
+functionality:
+- choose color
+- choose brightness
+- on/off
+- change illuminance threshold
+- change wifi credentials
+
+
+pages:
+- list of components -> neopixel-esp32 page -> 
+dashboard with current color, brightness and illuminance settings
++ possibility to edit
+- settings page where users can change wifi credentials
