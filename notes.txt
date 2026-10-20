@@ -11,3 +11,6 @@ pages:
 dashboard with current color, brightness and illuminance settings
 + possibility to edit
 - settings page where users can change wifi credentials
+
+
+!!! Use pnpm add <package> instead of npm install, so the lockfile stays in sync !!!
