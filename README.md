@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lighting control web app
 
-## Getting Started
+Next.js app for controlling the ESP32 + NeoPixel lighting system over MQTT.
 
-First, run the development server:
+## Package manager: pnpm only
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project uses **pnpm**. Do **not** use `npm install`, `npm i`, `yarn` or `bun`.
+They create a different lockfile and leave `pnpm-lock.yaml` out of date, which makes the Vercel build fail
+(`ERR_PNPM_OUTDATED_LOCKFILE`). Never create or commit `package-lock.json`, `yarn.lock` or `bun.lock`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Task | Command |
+|---|---|
+| Install dependencies | `pnpm install` |
+| Add a dependency | `pnpm add <package>` |
+| Add a dev dependency | `pnpm add -D <package>` |
+| Remove a dependency | `pnpm remove <package>` |
+| Run dev server | `pnpm dev` |
+| Build / lint | `pnpm build` / `pnpm lint` |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Always commit `pnpm-lock.yaml` together with any change to `package.json`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Getting started
 
-## Learn More
+1. `pnpm install`
+2. Create a `.env` file in the project root (it is git-ignored):
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   MQTT_URL=mqtts://<broker-host>:8883
+   MQTT_USERNAME=<username>
+   MQTT_PASSWORD=<password>
+   MQTT_COLOR_TOPIC=esp32/led/color
+   MQTT_BRIGHTNESS_TOPIC=esp32/led/brightness
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   These are read only on the server. Never prefix them with `NEXT_PUBLIC_`, or they will be exposed to the browser.
+3. `pnpm dev` and open [http://localhost:3000](http://localhost:3000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Pages
+
+- `/` home
+- `/dashboard` color picker and brightness control (publishes to MQTT through server actions)
+- `/settings` settings
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel detects `pnpm-lock.yaml` and installs with pnpm. Add the same five `MQTT_*` variables under
+Project Settings → Environment Variables, since `.env` is not deployed.
