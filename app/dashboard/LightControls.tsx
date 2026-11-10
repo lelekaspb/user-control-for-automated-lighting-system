@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { setBrightness, setColor } from "./actions";
 
 export default function LightControls() {
@@ -67,7 +68,19 @@ export default function LightControls() {
         </button>
       </label>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className="text-sm text-red-600">
+          {error}
+          {error === "Login required" && (
+            <>
+              {" – "}
+              <Link href="/login" className="underline">
+                log in
+              </Link>
+            </>
+          )}
+        </p>
+      )}
     </section>
   );
 }

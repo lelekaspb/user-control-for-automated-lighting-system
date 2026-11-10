@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 import "./globals.css";
+import AuthNav from "./AuthNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/">Home</Link>
             <Link href="/dashboard">Dashboard</Link>
             <Link href="/settings">Settings</Link>
+            <Suspense fallback={null}>
+              <AuthNav />
+            </Suspense>
           </nav>
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 p-4">{children}</main>
