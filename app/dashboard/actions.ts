@@ -12,7 +12,7 @@ async function publish(topic: string | undefined, message: string) {
     password: process.env.MQTT_PASSWORD,
   });
   try {
-    await client.publishAsync(topic, message, { qos: 1 });
+    await client.publishAsync(topic, message, { qos: 1, retain: true });
   } finally {
     await client.endAsync();
   }
