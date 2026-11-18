@@ -1,4 +1,3 @@
-"use server";
 import mqtt from "mqtt";
 
 // A short-lived probe checks server-to-broker connectivity without publishing.

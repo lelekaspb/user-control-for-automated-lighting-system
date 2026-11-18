@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-export type IconName = "leaf" | "home" | "bulb" | "automation" | "energy" | "sensors" | "settings" | "info" | "school" | "pulse" | "sun" | "target" | "sync" | "battery" | "wifi" | "hand" | "palette" | "clock" | "motion" | "check" | "menu" | "close";
+export type IconName = "leaf" | "home" | "bulb" | "automation" | "energy" | "sensors" | "settings" | "info" | "school" | "pulse" | "sun" | "target" | "sync" | "battery" | "wifi" | "hand" | "palette" | "clock" | "motion" | "check" | "menu" | "close" | "logIn" | "logOut";
 const paths: Record<IconName, React.ReactNode> = {
   leaf: <><path d="M21 3C9 3 2 7 5 16c8 5 16-2 16-13Z" fill="currentColor" stroke="none"/><path d="M3 21 16 8" stroke="#047c68"/></>,
   home: <><path d="m3 10 9-7 9 7v11h-7v-7h-4v7H3Z"/><path d="M8 7v-3"/></>,
@@ -24,6 +24,8 @@ const paths: Record<IconName, React.ReactNode> = {
   check: <path d="m5 12 4 4L19 6"/>,
   menu: <path d="M3 6h18M3 12h18M3 18h18"/>,
   close: <path d="m5 5 14 14M5 19 19 5"/>,
+  logIn: <><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></>,
+  logOut: <><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/><path d="m14 17 5-5-5-5"/><path d="M19 12H7"/></>,
 };
 export default function Icon({ name, size = 24, className = "", style }: { name: IconName; size?: number; className?: string; style?: CSSProperties }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className} style={style}>{paths[name]}</svg>;

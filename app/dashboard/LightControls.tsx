@@ -4,9 +4,27 @@ import type { CSSProperties } from "react";
 import Icon from "../components/Icon";
 import Link from "next/link";
 import { setBrightness, setColor } from "./actions";
-import { checkMqttConnection } from "./connection";
 
 type Connection = "checking" | "connected" | "disconnected" | "unknown";
+type ConnectionCheck = { ok: boolean; error?: string };
+
+function isConnectionCheck(value: unknown): value is ConnectionCheck {
+  return typeof value === "object" && value !== null &&
+    "ok" in value && typeof value.ok === "boolean" &&
+    (!("error" in value) || typeof value.error === "string");
+}
+
+async function checkMqttConnection(): Promise<ConnectionCheck> {
+  const response = await fetch("/api/mqtt-connection", { cache: "no-store" });
+  if (!response.ok) throw new Error("Unable to check broker connection.");
+
+  const result: unknown = await response.json();
+  if (!isConnectionCheck(result)) {
+    throw new Error("Invalid broker connection response.");
+  }
+  return result;
+}
+
 export default function LightControls() {
   const [color, setColorValue] = useState("#ffffff");
   const [brightness, setBrightnessValue] = useState(50);
