@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import Icon from "../components/Icon";
+import Link from "next/link";
 import { setBrightness, setColor } from "./actions";
 import { checkMqttConnection } from "./connection";
 
@@ -92,7 +93,7 @@ export default function LightControls() {
       <section className="card control-card" aria-labelledby="color-title"><div className="card-heading"><span className="icon-tile"><Icon name="palette" size={28}/></span><div><h3 id="color-title">Color Control</h3><p>Choose the light colour (RGB)</p></div></div><div className="color-preview" style={{ background: color }}><span className="preview-label">Selected colour</span></div><div className="color-picker-row"><label className="picker-label" htmlFor="light-color">Choose colour<span>Published when your selection is confirmed</span></label><div className="color-input-wrap"><input ref={colorInput} id="light-color" type="color" value={color} disabled={sending} onChange={e => setColorValue(e.target.value)}/><code>{color.toUpperCase()}</code></div></div><div className="rgb-values" aria-live="polite">{["R", "G", "B"].map((label, i) => <div key={label}><span>{label}</span><output>{rgb[i]}</output></div>)}</div></section>
       <section className="card control-card brightness-card" aria-labelledby="brightness-title"><div className="card-heading"><span className="icon-tile"><Icon name="sun" size={29}/></span><div><h3 id="brightness-title">Brightness Control</h3><p>Adjust overall light brightness</p></div></div><div className="brightness-display"><span className="sun-halo"><Icon name="sun" size={38}/></span><output htmlFor="brightness">{brightness}<small>%</small></output><span>Selected brightness</span></div><div className="range-block"><input id="brightness" aria-label="Light brightness" type="range" min="0" max="100" value={brightness} disabled={sending} onChange={e => setBrightnessValue(Number(e.target.value))} style={{ "--range-progress": `${brightness}%` } as CSSProperties}/><div className="range-labels"><span>0%</span><span>100%</span></div></div><button className="button primary apply-button" disabled={sending} onClick={() => void applyBrightness()}><Icon name="check" size={20}/>{sending ? "Sending…" : "Apply brightness"}</button><p className="control-note">Move the slider, then apply to send your selection.</p></section>
     </div>
-    {message && <div className={`feedback ${message.error ? "error" : "success"}`} role={message.error ? "alert" : "status"}><Icon name={message.error ? "info" : "check"} size={21}/><span>{message.text}{!message.error && <small> Device confirmation is not available.</small>}</span></div>}
+    {message && <div className={`feedback ${message.error ? "error" : "success"}`} role={message.error ? "alert" : "status"}><Icon name={message.error ? "info" : "check"} size={21}/><span>{message.text}{message.error && message.text === "Login required" && <>{" – "}<Link href="/login" className="underline">log in</Link></>}{!message.error && <small> Device confirmation is not available.</small>}</span></div>}
   </div>;
 }
 
